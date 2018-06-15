@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>User Following Feed</h3>
+<div class='row'>
+	<div class='col-sm-12'>
+
+	{% for obj in object_list %}
+		<div class='thumbnail'>  <!-- v4 card card-default -->
+			<h3><a href='{% url "profiles:detail" username=obj.user.username %}'>{{ obj.user.username }}</a></h3>
+			<!-- <h4>{{ obj.name }}</h4> -->
+			<p><a href='{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurant.title }}'>{{ obj.restaurant.title }}</a> | <a href='{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurant.location }}'>{{ obj.restaurant.location}}</a> | <a href='{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurant.category }}'>{{ obj.restaurant.category }}</a></p>
+			<ul>
+				
+				<li style='margin-bottom: 15px;'><b>{{ obj.name }}</b><br/>
+					<!-- {{ item.contents }} -->
+					{% for ing in obj.get_contents %}
+					<span style='padding: 2px 4px; margin-right:4px; background-color:#ccc'>
+						<a href='{% url "profiles:detail" username=obj.user.username %}?q={{ ing }}'>{{ ing }}</a>
+					</span>
+					{% endfor %}
+				</li>
+				
+			</ul>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
